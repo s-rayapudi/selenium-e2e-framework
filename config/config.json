@@ -1,0 +1,13 @@
+{
+  "environments": {
+    "QE": {
+      "url": "https://automationpractice.techwithjatin.com/"
+    },
+    "UAT": {
+      "url": "https://automationpractice.techwithjatin.com/"
+    },
+    "PROD": {
+      "url": "https://automationpractice.techwithjatin.com/"
+    }
+  }
+}
