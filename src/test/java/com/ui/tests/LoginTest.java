@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 
 import com.constants.Browsers;
 import com.ui.pages.HomePage;
+import com.ui.pojos.UserCredentials;
 
 public class LoginTest {
 
@@ -18,9 +19,14 @@ public class LoginTest {
         homePage = new HomePage(Browsers.EDGE);
     }
 
-    @Test(description = "Verify that a user can log in successfully with valid credentials.", groups = {"smoke", "sanity"})
-    public void loginTest() {
-        assertEquals(homePage.goToSignInPage().performSignIn("sandeep@qa.com", "Password").getUserName(), "Sandeep Raya");
+    @Test(description = "Verify that a user can log in successfully with valid credentials. When the data is read from a JSON file.", groups = {"smoke", "sanity"}, dataProviderClass = com.ui.dataProviders.LoginDataProvider.class, dataProvider = "loginDataProvider")
+    public void loginTest(UserCredentials userCredentials) {
+        assertEquals(homePage.goToSignInPage().performSignIn(userCredentials.getEmailAddress(), userCredentials.getPassword()).getUserName(), userCredentials.getUserName());
+    }
+
+    @Test(description = "Verify that a user can log in successfully with valid credentials. When the data is read from a CSV file.", groups = {"smoke", "sanity"}, dataProviderClass = com.ui.dataProviders.LoginDataProvider.class, dataProvider = "loginDataProviderFromCSV")
+    public void loginCSVTest(UserCredentials userCredentials) {
+        assertEquals(homePage.goToSignInPage().performSignIn(userCredentials.getEmailAddress(), userCredentials.getPassword()).getUserName(), userCredentials.getUserName());
     }
 
     @AfterMethod(description = "Close the browser after each test method.")
