@@ -16,7 +16,7 @@ public class LoginTest {
 
     @BeforeMethod(description = "Initialize the HomePage before each test method.")
     public void setup() throws Exception {
-        homePage = new HomePage(Browsers.EDGE);
+        homePage = new HomePage(Browsers.CHROME);
     }
 
     @Test(description = "Verify that a user can log in successfully with valid credentials. When the data is read from a JSON file.", groups = {"smoke", "sanity"}, dataProviderClass = com.ui.dataProviders.LoginDataProvider.class, dataProvider = "loginDataProvider")
@@ -26,6 +26,11 @@ public class LoginTest {
 
     @Test(description = "Verify that a user can log in successfully with valid credentials. When the data is read from a CSV file.", groups = {"smoke", "sanity"}, dataProviderClass = com.ui.dataProviders.LoginDataProvider.class, dataProvider = "loginDataProviderFromCSV")
     public void loginCSVTest(UserCredentials userCredentials) {
+        assertEquals(homePage.goToSignInPage().performSignIn(userCredentials.getEmailAddress(), userCredentials.getPassword()).getUserName(), userCredentials.getUserName());
+    }
+
+    @Test(description = "Verify that a user can log in successfully with valid credentials. When the data is read from an Excel file.", groups = {"smoke", "sanity"}, dataProviderClass = com.ui.dataProviders.LoginDataProvider.class, dataProvider = "loginDataProviderFromExcel")
+    public void loginExcelTest(UserCredentials userCredentials) {
         assertEquals(homePage.goToSignInPage().performSignIn(userCredentials.getEmailAddress(), userCredentials.getPassword()).getUserName(), userCredentials.getUserName());
     }
 

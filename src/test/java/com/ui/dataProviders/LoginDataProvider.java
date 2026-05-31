@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.ui.pojos.UserCredentials;
 import com.ui.pojos.UserCredentialsTestData;
 import com.utility.CSVReaderUtility;
+import com.utility.ExcelReaderUtility;
 
 import org.testng.annotations.DataProvider;
 
@@ -34,6 +35,11 @@ public class LoginDataProvider {
     @DataProvider(name = "loginDataProviderFromCSV")
     public Iterator<UserCredentials> loginDataProviderFromCSV() {
         return CSVReaderUtility.readCSVFile("loginData.csv");
+    }
+
+    @DataProvider(name = "loginDataProviderFromExcel")
+    public Iterator<UserCredentials> loginDataProviderFromExcel() {
+        return ExcelReaderUtility.readExcelData("loginData.xlsx");
     }
 
 }
