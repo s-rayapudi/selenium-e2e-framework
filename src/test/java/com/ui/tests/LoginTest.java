@@ -19,7 +19,9 @@ public class LoginTest {
         homePage = new HomePage(Browsers.CHROME);
     }
 
-    @Test(description = "Verify that a user can log in successfully with valid credentials. When the data is read from a JSON file.", groups = {"smoke", "sanity"}, dataProviderClass = com.ui.dataProviders.LoginDataProvider.class, dataProvider = "loginDataProvider")
+    @Test(description = "Verify that a user can log in successfully with valid credentials. When the data is read from a JSON file.", 
+            groups = {"smoke", "sanity"}, dataProviderClass = com.ui.dataProviders.LoginDataProvider.class, 
+            dataProvider = "loginDataProvider", retryAnalyzer = com.ui.listeners.RetryAnalyzer.class)
     public void loginTest(UserCredentials userCredentials) {
         assertEquals(homePage.goToSignInPage().performSignIn(userCredentials.getEmailAddress(), userCredentials.getPassword()).getUserName(), userCredentials.getUserName());
     }

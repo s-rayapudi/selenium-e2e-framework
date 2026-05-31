@@ -10,7 +10,7 @@ import com.ui.pojos.Environment;
 
 public class JSONUtility {
 
-    public static String readJSON(Environments env) throws Exception {
+    public static Environment readJSON(Environments env) throws Exception {
         Gson gson = new Gson();
         File jsonFile = new File(System.getProperty("user.dir") + File.separator + "config" + File.separator + "config.json");
 
@@ -25,7 +25,7 @@ public class JSONUtility {
                 throw new Exception("URL not defined for environment: " + env.name());
             }
 
-            return environment.getUrl();
+            return environment;
         } catch (Exception e) {
             throw new Exception("Failed to read JSON config file: " + jsonFile.getAbsolutePath(), e);
         }

@@ -1,13 +1,16 @@
 {
   "environments": {
     "QE": {
-      "url": "https://automationpractice.techwithjatin.com/"
+      "url": "https://automationpractice.techwithjatin.com/",
+      "MAX_RETRY_COUNT" : 3
     },
     "UAT": {
-      "url": "https://automationpractice.techwithjatin.com/"
+      "url": "https://automationpractice.techwithjatin.com/",
+      "MAX_RETRY_COUNT" : 3
     },
     "PROD": {
-      "url": "https://automationpractice.techwithjatin.com/"
+      "url": "https://automationpractice.techwithjatin.com/",
+      "MAX_RETRY_COUNT" : 3
     }
   }
 }

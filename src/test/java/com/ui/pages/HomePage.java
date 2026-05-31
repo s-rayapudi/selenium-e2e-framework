@@ -12,7 +12,7 @@ public final class HomePage extends BrowserUtilities {
     public HomePage(Browsers browser) throws Exception {
         super(browser);
         maximizeWindow();
-        navigateToUrl(JSONUtility.readJSON(QE));
+        navigateToUrl(JSONUtility.readJSON(QE).getUrl());
     }
 
     private static final By SIGN_IN_LOCATOR = By.xpath("//a[contains(text(), 'Sign')]");
