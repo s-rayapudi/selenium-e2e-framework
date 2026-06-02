@@ -10,8 +10,12 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,15 +35,32 @@ public class BrowserUtilities {
         logger.info("BrowserUtilities initialized with the provided WebDriver.");
     }
 
-    public BrowserUtilities(Browsers browserName){
+    public BrowserUtilities(Browsers browserName, boolean isHeadless){
         logger.info("Initializing BrowserUtilities with browser: {}", browserName);
         if(browserName == Browsers.CHROME){
-            driver.set(new ChromeDriver());
+            if(isHeadless) {
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("--headless");
+                driver.set(new ChromeDriver(options));
+            }
+            else
+                driver.set(new ChromeDriver());
         }
         else if(browserName == Browsers.EDGE){
-            driver.set(new EdgeDriver());
+            if(isHeadless) {
+                EdgeOptions options = new EdgeOptions();
+                options.addArguments("--headless");
+                driver.set(new EdgeDriver(options));
+            }
+            else
+                driver.set(new EdgeDriver());
         }
         else if(browserName == Browsers.FIREFOX){
+            if(isHeadless) {
+                FirefoxOptions options = new FirefoxOptions();
+                options.addArguments("--headless");
+                driver.set(new FirefoxDriver());
+            }
             driver.set(new FirefoxDriver());
         }
         else {
