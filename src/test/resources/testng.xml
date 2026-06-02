@@ -2,6 +2,9 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-current.dtd">
 <suite name="UI Automation Practice Suite" parallel="methods" thread-count="3">
     <test name="UI Automation Tests">
+    <parameter name="browser" value="${browser}"/>
+    <parameter name="isHeadless" value="${isHeadless}"/>
+    <parameter name="isLambdaTest" value="${isLambdaTest}"/>
         <classes>
             <class name="com.ui.tests.LoginTest" />
         </classes>

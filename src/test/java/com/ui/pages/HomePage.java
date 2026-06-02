@@ -2,6 +2,7 @@ package com.ui.pages;
 
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 
 import com.constants.Browsers;
 import static com.constants.Environments.*;
@@ -13,8 +14,15 @@ public final class HomePage extends BrowserUtilities {
 
     Logger logger = LoggerUtility.getLogger(getClass());
 
-    public HomePage(Browsers browser) throws Exception {
-        super(browser);
+    public HomePage(WebDriver driver) throws Exception {
+        super(driver);
+        maximizeWindow();
+        logger.info("Navigating to the home page.");
+        navigateToUrl(JSONUtility.readJSON(QE).getUrl());
+    }
+
+    public HomePage(Browsers browser, boolean isHeadless) throws Exception {
+        super(browser, isHeadless);
         maximizeWindow();
         logger.info("Navigating to the home page.");
         navigateToUrl(JSONUtility.readJSON(QE).getUrl());

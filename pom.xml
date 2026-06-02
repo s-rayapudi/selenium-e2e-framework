@@ -97,6 +97,11 @@
                 <suiteXmlFiles>
                     <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
                 </suiteXmlFiles>
+                <systemPropertyVariables>
+                    <browser>${browser}</browser>
+                    <isHeadless>${isHeadless}</isHeadless>
+                    <isLambdaTest>${isLambdaTest}</isLambdaTest>
+                </systemPropertyVariables>
             </configuration>
         </plugin>
     </plugins>
