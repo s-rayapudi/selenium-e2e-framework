@@ -6,3 +6,6 @@ target/
 *.prefs
 .DS_Store
 test-output/
+report.html
+logs/
+screenshots/
