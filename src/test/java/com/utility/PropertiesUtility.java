@@ -9,7 +9,7 @@ import com.constants.Environments;
 public class PropertiesUtility {
     public static String readProperties(Environments environment, String propertyName) throws Exception {
 
-        File propertiesFile = new File(System.getProperty("user.dir") + "\\config\\" + environment + ".properties");
+        File propertiesFile = new File(System.getProperty("user.dir") + "//config//" + environment + ".properties");
         Properties properties = new Properties();
         try (FileReader fileReader = new FileReader(propertiesFile)) {
             properties.load(fileReader);
