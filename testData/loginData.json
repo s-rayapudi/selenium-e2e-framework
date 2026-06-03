@@ -9,6 +9,11 @@
             "emailAddress": "raya@qa.com",
             "password": "Password123",
             "userName": "David Raya"
+        },
+        {
+            "emailAddress": "test@qa.com",
+            "password": "Test123",
+            "userName": "Test User"
         }
     ]
 }
