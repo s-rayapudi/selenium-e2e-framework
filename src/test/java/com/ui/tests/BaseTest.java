@@ -24,7 +24,7 @@ public class BaseTest {
     public void setup(
         @Optional ("chrome") String browser, 
         @Optional ("false") boolean isLambdatest, 
-        @Optional ("true") boolean isHeadless,ITestResult result) throws Exception {
+        @Optional ("false") boolean isHeadless,ITestResult result) throws Exception {
         logger.info("Setting up the HomePage for the test.");
         if(isLambdaTest) {
             WebDriver lambdaTestDriver = LambdaTestUtility.initializeLambdaTestSession(browser, result.getMethod().getMethodName());
