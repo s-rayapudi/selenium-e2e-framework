@@ -5,12 +5,16 @@ import java.io.File;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -27,7 +31,7 @@ import com.constants.Browsers;
 
 public class BrowserUtilities {
     private static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
-    Logger logger = LoggerUtility.getLogger(getClass());
+    public Logger logger = LoggerUtility.getLogger(getClass());
 
     public WebDriver getDriver() {
         return driver.get();
@@ -89,26 +93,48 @@ public class BrowserUtilities {
 
     public void clickOnElement(By locator){
         logger.info("Clicking on element with locator: {}", locator);
-        WebElement element = driver.get().findElement(locator);
+        WebElement element = waitForElementToBeClickable(locator, 5);
         element.click();
     }
 
     public void enterTextToElement(By locator, String textToEnter){
         logger.info("Entering text '{}' into element with locator: {}", textToEnter, locator);
-        WebElement element = driver.get().findElement(locator);
+        WebElement element = waitForElementVisible(locator, 5);
+        element.clear();
         element.sendKeys(textToEnter);
     }
 
     public String getTextFromElement(By locator){
         logger.info("Getting text from element with locator: {}", locator);
-        WebElement element = driver.get().findElement(locator);
+        WebElement element = waitForElementVisible(locator, 5);
         return element.getText();
     }
 
-    public void waitForElementToBeVisible(By locator, int timeoutInSeconds) {
-        logger.info("Waiting for element to be visible with locator: {} for up to {} seconds", locator, timeoutInSeconds);
-        WebDriverWait wait = new WebDriverWait(driver.get(), Duration.ofSeconds(timeoutInSeconds));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    public void selectFromDropdownByVisibleText(By locator, String visibleText) {
+        logger.info("Selecting '{}' from dropdown with locator: {}", visibleText, locator);
+        WebElement dropdownElement = waitForElementVisible(locator, 15);
+        scrollToElement(dropdownElement);
+        waitForElementToBeClickable(locator, 15);
+        Select dropdown = new Select(dropdownElement);
+        dropdown.selectByVisibleText(visibleText);
+    }
+
+    public void scrollToElement(WebElement element) {
+        logger.info("Scrolling element into view: {}", element);
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver.get();
+        jsExecutor.executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});", element);
+    }
+
+    public WebElement waitForElementVisible(By locator, long timeOutInSeconds) {
+        logger.info("Waiting for element with locator: {} to be visible for up to {} seconds.", locator, timeOutInSeconds);
+        WebDriverWait wait = new WebDriverWait(driver.get(), Duration.ofSeconds(timeOutInSeconds));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    public WebElement waitForElementToBeClickable(By locator, long timeOutInSeconds) {
+        logger.info("Waiting for element with locator: {} to be clickable for up to {} seconds.", locator, timeOutInSeconds);
+        WebDriverWait wait = new WebDriverWait(driver.get(), Duration.ofSeconds(timeOutInSeconds));
+        return wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
 
     public String takeScreenshot(String filePath) {
