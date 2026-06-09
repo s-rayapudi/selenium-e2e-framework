@@ -15,9 +15,12 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.Date;
 
 import com.constants.Browsers;
@@ -100,6 +103,12 @@ public class BrowserUtilities {
         logger.info("Getting text from element with locator: {}", locator);
         WebElement element = driver.get().findElement(locator);
         return element.getText();
+    }
+
+    public void waitForElementToBeVisible(By locator, int timeoutInSeconds) {
+        logger.info("Waiting for element to be visible with locator: {} for up to {} seconds", locator, timeoutInSeconds);
+        WebDriverWait wait = new WebDriverWait(driver.get(), Duration.ofSeconds(timeoutInSeconds));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
     public String takeScreenshot(String filePath) {
