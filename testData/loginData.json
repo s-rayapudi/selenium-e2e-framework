@@ -4,11 +4,6 @@
             "emailAddress": "sandeep@qa.com",
             "password": "Password",
             "userName": "Sandeep Raya"
-        },
-        {
-            "emailAddress": "raya@qa.com",
-            "password": "Password123",
-            "userName": "David Raya"
         }
     ]
 }
