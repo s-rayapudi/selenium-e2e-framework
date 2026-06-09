@@ -13,6 +13,15 @@ public final class SignInPage extends BrowserUtilities {
     private static final By PASSWORD_LOCATOR = By.id("passwd");
     private static final By SIGN_IN_BUTTON_LOCATOR = By.id("SubmitLogin");
     private static final By INVALID_CREDENTIALS_ERROR_LOCATOR = By.xpath("//div[contains(@class, 'alert')]/ol/li");
+    private static final By FORGGOT_PASSWORD_LINK_LOCATOR = By.xpath("//a[text()='Forgot your password?']");
+    private static final By PASSWORD_RESET_EMAIL_FIELD_LOCATOR = By.id("email");
+    private static final By PASSWORD_RETRIEVE_BUTTON_LOCATOR = By.xpath("//span[text()='Retrieve Password']");
+    private static final By PASSWORD_REST_SUCCESS_MESSAGE_LOCATOR = By.xpath("//div[@id='center_column']/div/p");
+    private static final By ACCOUNT_CREATION_EMAIL_FIELD_LOCATOR = By.xpath("//input[@id='email_create']");
+    private static final By CREATE_ACCOUNT_BUTTON_LOCATOR = By.id("SubmitCreate");
+    private static final By ACCOUNT_ALREADY_EXISTS_ERROR_LOCATOR = By.xpath("//div[@id='create_account_error']/ol/li");
+    private static final By ACCOUNT_DOES_NOT_EXIST_ERROR_LOCATOR = By.xpath("//div[contains(@class, 'alert')]/ol/li");
+
     Logger logger = LoggerUtility.getLogger(getClass());
 
     public SignInPage(WebDriver driver) {
@@ -36,7 +45,43 @@ public final class SignInPage extends BrowserUtilities {
     }
 
     public String captureInvalidSignInErrorMessage() {
+        waitForElementToBeVisible(INVALID_CREDENTIALS_ERROR_LOCATOR, 10);
         return getTextFromElement(INVALID_CREDENTIALS_ERROR_LOCATOR);
+    }
+
+    public SignInPage clickOnForgotPasswordLink() {
+        clickOnElement(FORGGOT_PASSWORD_LINK_LOCATOR);
+        logger.info("Clicked on forgot password link.");
+        return this;
+    }
+
+    public SignInPage resetPassword(String emailId) {
+        enterTextToElement(PASSWORD_RESET_EMAIL_FIELD_LOCATOR, emailId);
+        clickOnElement(PASSWORD_RETRIEVE_BUTTON_LOCATOR);
+        logger.info("Submitted password reset request for email: {}", emailId);
+        return this;
+    }
+
+    public String capturePasswordResetSuccessMessage() {
+        waitForElementToBeVisible(PASSWORD_REST_SUCCESS_MESSAGE_LOCATOR, 10);
+        return getTextFromElement(PASSWORD_REST_SUCCESS_MESSAGE_LOCATOR);
+    }
+
+    public SignInPage createAccountWithExistingEmail(String emailId) {
+        enterTextToElement(ACCOUNT_CREATION_EMAIL_FIELD_LOCATOR, emailId);
+        clickOnElement(CREATE_ACCOUNT_BUTTON_LOCATOR);
+        logger.info("Attempted to create account with existing email: {}", emailId);
+        return this;
+    }
+
+    public String captureAccountCreationErrorMessage() {
+        waitForElementToBeVisible(ACCOUNT_ALREADY_EXISTS_ERROR_LOCATOR, 10);
+        return getTextFromElement(ACCOUNT_ALREADY_EXISTS_ERROR_LOCATOR);
+    }
+
+    public String captureAccountDoesNotExistErrorMessage() {
+        waitForElementToBeVisible(ACCOUNT_DOES_NOT_EXIST_ERROR_LOCATOR, 10);
+        return getTextFromElement(ACCOUNT_DOES_NOT_EXIST_ERROR_LOCATOR);
     }
 
 }
