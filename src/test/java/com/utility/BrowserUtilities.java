@@ -110,33 +110,6 @@ public class BrowserUtilities {
         return element.getText();
     }
 
-    public void selectFromDropdownByVisibleText(By locator, String visibleText) {
-        logger.info("Selecting '{}' from dropdown with locator: {}", visibleText, locator);
-        WebElement dropdownElement = waitForElementVisible(locator, 15);
-        scrollToElement(dropdownElement);
-        waitForElementToBeClickable(locator, 15);
-        Select dropdown = new Select(dropdownElement);
-        dropdown.selectByVisibleText(visibleText);
-    }
-
-    public void scrollToElement(WebElement element) {
-        logger.info("Scrolling element into view: {}", element);
-        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver.get();
-        jsExecutor.executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});", element);
-    }
-
-    public WebElement waitForElementVisible(By locator, long timeOutInSeconds) {
-        logger.info("Waiting for element with locator: {} to be visible for up to {} seconds.", locator, timeOutInSeconds);
-        WebDriverWait wait = new WebDriverWait(driver.get(), Duration.ofSeconds(timeOutInSeconds));
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-    }
-
-    public WebElement waitForElementToBeClickable(By locator, long timeOutInSeconds) {
-        logger.info("Waiting for element with locator: {} to be clickable for up to {} seconds.", locator, timeOutInSeconds);
-        WebDriverWait wait = new WebDriverWait(driver.get(), Duration.ofSeconds(timeOutInSeconds));
-        return wait.until(ExpectedConditions.elementToBeClickable(locator));
-    }
-
     public String takeScreenshot(String filePath) {
         logger.info("Taking screenshot and saving to file: {}", filePath);
             TakesScreenshot screenshot = (TakesScreenshot) driver.get();
