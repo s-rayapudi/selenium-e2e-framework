@@ -5,7 +5,6 @@ import java.io.File;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -13,14 +12,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -97,11 +93,21 @@ public class BrowserUtilities {
         element.click();
     }
 
+    private WebElement waitForElementToBeClickable(By locator, long timeoutInSeconds) {
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(timeoutInSeconds));
+        return wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+
     public void enterTextToElement(By locator, String textToEnter){
         logger.info("Entering text '{}' into element with locator: {}", textToEnter, locator);
         WebElement element = waitForElementVisible(locator, 5);
         element.clear();
         element.sendKeys(textToEnter);
+    }
+
+    public WebElement waitForElementVisible(By locator, long timeoutInSeconds) {
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(timeoutInSeconds));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
     public String getTextFromElement(By locator){

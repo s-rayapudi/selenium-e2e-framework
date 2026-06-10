@@ -8,6 +8,7 @@
         <classes>
             <class name="com.ui.tests.LoginTest" />
             <class name="com.ui.tests.InvalidLoginTest" />
+            <class name="com.ui.tests.PasswordResetTest" />
         </classes>
     </test>
 </suite>
