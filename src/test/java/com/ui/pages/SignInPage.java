@@ -45,7 +45,6 @@ public final class SignInPage extends BrowserUtilities {
     }
 
     public String captureInvalidSignInErrorMessage() {
-        waitForElementToBeVisible(INVALID_CREDENTIALS_ERROR_LOCATOR, 10);
         return getTextFromElement(INVALID_CREDENTIALS_ERROR_LOCATOR);
     }
 
@@ -63,7 +62,6 @@ public final class SignInPage extends BrowserUtilities {
     }
 
     public String capturePasswordResetSuccessMessage() {
-        waitForElementToBeVisible(PASSWORD_REST_SUCCESS_MESSAGE_LOCATOR, 10);
         return getTextFromElement(PASSWORD_REST_SUCCESS_MESSAGE_LOCATOR);
     }
 
@@ -75,12 +73,10 @@ public final class SignInPage extends BrowserUtilities {
     }
 
     public String captureAccountCreationErrorMessage() {
-        waitForElementToBeVisible(ACCOUNT_ALREADY_EXISTS_ERROR_LOCATOR, 10);
         return getTextFromElement(ACCOUNT_ALREADY_EXISTS_ERROR_LOCATOR);
     }
 
     public String captureAccountDoesNotExistErrorMessage() {
-        waitForElementToBeVisible(ACCOUNT_DOES_NOT_EXIST_ERROR_LOCATOR, 10);
         return getTextFromElement(ACCOUNT_DOES_NOT_EXIST_ERROR_LOCATOR);
     }
 
